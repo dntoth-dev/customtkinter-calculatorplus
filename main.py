@@ -119,7 +119,7 @@ def add_button_pressed():
     if current_text.endswith("+") or current_text.endswith("-") or current_text.endswith("×") or current_text.endswith("÷"):
         display.delete(len(current_text) - 1, tk.END)
     display.insert(tk.END, "+")
-    display.configure(state="disabled")  # Disable the display again
+    upper_display.configure(state="disabled")  # Disable the upper display
 
 def subtract_button_pressed():
     display.configure(state="normal")  # Enable the display to modify it
@@ -150,13 +150,17 @@ def divide_button_pressed():
         display.delete(len(current_text) - 1, tk.END)
     display.insert(tk.END, "÷")
     display.configure(state="disabled")  # Disable the display again
-                             
+
+
+
+
+
 # region Display
 
 white_canvas = tk.CTkCanvas(app, bg="white")
 white_canvas.grid(row=0, rowspan=2, column=0, columnspan=4, padx=10, pady=(30,60), sticky="nsew")
 
-display = tk.CTkEntry(app, font=display_font, justify="right",  fg_color="white", text_color="black", border_width=0, corner_radius=0)
+display = tk.CTkEntry(app, font=display_font, justify="left",  fg_color="white", text_color="black", border_width=0, corner_radius=0)
 display.insert(0, "0")  # Initial value
 display.grid(row=0, column=0, columnspan=4, padx=10, pady=(30,60), sticky="nsew")
 
@@ -165,6 +169,7 @@ upper_display.grid(row=0, column=0, columnspan=4, padx=15, pady=(32, 220), stick
 
 
 display.configure(state="disabled")  # Make the display read-only
+upper_display.configure(state="disabled")  # Make the upper display read-only
 # endregion
 
 # region Options
@@ -182,12 +187,12 @@ add_button = tk.CTkButton(app, text="+", command=lambda: (print("Add"), add_butt
 add_button.grid(padx = 3, pady = 3, row=2, column=3, sticky="nsew")
 subtract_button = tk.CTkButton(app, text="-", command=lambda: (print("Subtract"), subtract_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 subtract_button.grid(padx = 3, pady = 3, row=3, column=3, sticky="nsew")
-multiply_button = tk.CTkButton(app, text="×", command=lambda: print("Multiply"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+multiply_button = tk.CTkButton(app, text="×", command=lambda: (print("Multiply"), multiply_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 multiply_button.grid(padx = 3, pady = 3, row=4, column=3, sticky="nsew")
-divide_button = tk.CTkButton(app, text="÷", command=lambda: print("Divide"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+divide_button = tk.CTkButton(app, text="÷", command=lambda: (print("Divide"), divide_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 divide_button.grid(padx = 3, pady = (3, 5), row=5, column=3, sticky="nsew")
 
-equal_button = tk.CTkButton(app, text="=", command=lambda: print("Equal to"), height=4, width=4, fg_color="green", hover_color="lightblue", text_color="white", font=btn_font)
+equal_button = tk.CTkButton(app, text="=", command=lambda: (print("Equal to"), """equal_button_pressed()"""), height=4, width=4, fg_color="green", hover_color="lightblue", text_color="white", font=btn_font)
 equal_button.grid(padx = 3, pady = (3, 5), row=5, column=2, sticky="nsew")
 # endregion
 
