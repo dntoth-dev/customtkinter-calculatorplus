@@ -111,9 +111,17 @@ def zero_button_pressed():
     display.configure(state="disabled")  # Disable the display again
 
 # region Display
-display = tk.CTkEntry(app, font=display_font, justify="right", fg_color="white", text_color="black")
+
+white_canvas = tk.CTkCanvas(app, bg="white")
+white_canvas.grid(row=0, rowspan=2, column=0, columnspan=4, padx=10, pady=(30,60), sticky="nsew")
+
+display = tk.CTkEntry(app, font=display_font, justify="right",  fg_color="white", text_color="black", border_width=0, corner_radius=0)
 display.insert(0, "0")  # Initial value
-display.grid(row=0, column=0, columnspan=4, padx=10, pady=(30,30), sticky="nsew")
+display.grid(row=0, column=0, columnspan=4, padx=10, pady=(30,60), sticky="nsew")
+
+upper_display = tk.CTkEntry(app, font=optn_font, justify="right", fg_color="white", text_color="black", border_width=0, corner_radius=0)
+upper_display.grid(row=0, column=0, columnspan=4, padx=15, pady=(32, 220), sticky="nsew")
+
 
 display.configure(state="disabled")  # Make the display read-only
 # endregion
@@ -129,7 +137,7 @@ dark_mode_button.grid(padx=3, pady=0, row=0, column=1, sticky="nsew")
 # endregion
 
 # region Function Buttons
-add_button = tk.CTkButton(app, text="+", command=lambda: print("Add"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+add_button = tk.CTkButton(app, text="+", command=lambda: (print("Add"), add_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white")
 add_button.grid(padx = 3, pady = 3, row=2, column=3, sticky="nsew")
 subtract_button = tk.CTkButton(app, text="-", command=lambda: print("Subtract"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 subtract_button.grid(padx = 3, pady = 3, row=3, column=3, sticky="nsew")
@@ -143,34 +151,34 @@ equal_button.grid(padx = 3, pady = (3, 5), row=5, column=2, sticky="nsew")
 # endregion
 
 # region Number Buttons
-one_bt = tk.CTkButton(app, text="1", command=lambda: (print("1"), one_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+one_bt = tk.CTkButton(app, text="1", command=lambda: (print("1"), one_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 one_bt.grid(padx = 3, pady = 3, row=4, column=0, sticky="nsew")
 
-two_bt = tk.CTkButton(app, text="2", command=lambda: (print("2"), two_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+two_bt = tk.CTkButton(app, text="2", command=lambda: (print("2"), two_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 two_bt.grid(padx = 3, pady = 3, row=4, column=1, sticky="nsew")
 
-three_bt = tk.CTkButton(app, text="3", command=lambda: (print("3"), three_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+three_bt = tk.CTkButton(app, text="3", command=lambda: (print("3"), three_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 three_bt.grid(padx = 3, pady = 3, row=4, column=2, sticky="nsew")
 
-four_bt = tk.CTkButton(app, text="4", command=lambda: (print("4"), four_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+four_bt = tk.CTkButton(app, text="4", command=lambda: (print("4"), four_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 four_bt.grid(padx = 3, pady = 3, row=3, column=0, sticky="nsew")
 
-five_bt = tk.CTkButton(app, text="5", command=lambda: (print("5"), five_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+five_bt = tk.CTkButton(app, text="5", command=lambda: (print("5"), five_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 five_bt.grid(padx = 3, pady = 3, row=3, column=1, sticky="nsew")
 
-six_bt = tk.CTkButton(app, text="6", command=lambda: (print("6"), six_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+six_bt = tk.CTkButton(app, text="6", command=lambda: (print("6"), six_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 six_bt.grid(padx = 3, pady = 3, row=3, column=2, sticky="nsew")
 
-seven_bt = tk.CTkButton(app, text="7", command=lambda: (print("7"), seven_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+seven_bt = tk.CTkButton(app, text="7", command=lambda: (print("7"), seven_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 seven_bt.grid(padx = 3, pady = 3, row=2, column=0, sticky="nsew")
 
-eight_bt = tk.CTkButton(app, text="8", command=lambda: (print("8"), eight_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+eight_bt = tk.CTkButton(app, text="8", command=lambda: (print("8"), eight_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 eight_bt.grid(padx = 3, pady = 3, row=2, column=1, sticky="nsew")
 
-nine_bt = tk.CTkButton(app, text="9", command=lambda: (print("9"), nine_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+nine_bt = tk.CTkButton(app, text="9", command=lambda: (print("9"), nine_button_pressed()), height=4, width=4, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 nine_bt.grid(padx = 3, pady = 3, row=2, column = 2, sticky="nsew")
 
-zero_bt = tk.CTkButton(app, text="0", command=lambda: (print("0"), zero_button_pressed()), height=4, width=8, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+zero_bt = tk.CTkButton(app, text="0", command=lambda: (print("0"), zero_button_pressed()), height=4, width=8, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font, corner_radius=0)
 zero_bt.grid(padx = 3, pady = (3, 5), row=5, column=0, columnspan=2, sticky="nsew")
 # endregion
 
