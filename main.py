@@ -6,6 +6,7 @@ import os
 app = tk.CTk()
 app.title("Calculator+")
 app.geometry("400x600")
+app.resizable(False, False)  # Disable resizing
 app._set_appearance_mode("light")  # Set default appearance mode
 # endregion
 
@@ -110,6 +111,46 @@ def zero_button_pressed():
     display.insert(tk.END, "0")
     display.configure(state="disabled")  # Disable the display again
 
+def add_button_pressed():
+    display.configure(state="normal")  # Enable the display to modify it
+    current_text = display.get()
+    if current_text == "0":
+        display.delete(0, tk.END)
+    if current_text.endswith("+") or current_text.endswith("-") or current_text.endswith("×") or current_text.endswith("÷"):
+        display.delete(len(current_text) - 1, tk.END)
+    display.insert(tk.END, "+")
+    display.configure(state="disabled")  # Disable the display again
+
+def subtract_button_pressed():
+    display.configure(state="normal")  # Enable the display to modify it
+    current_text = display.get()
+    if current_text == "0":
+        display.delete(0, tk.END)
+    if current_text.endswith("+") or current_text.endswith("-") or current_text.endswith("×") or current_text.endswith("÷"):
+        display.delete(len(current_text) - 1, tk.END)
+    display.insert(tk.END, "-")
+    display.configure(state="disabled")  # Disable the display again
+
+def multiply_button_pressed():
+    display.configure(state="normal")  # Enable the display to modify it
+    current_text = display.get()
+    if current_text == "0":
+        display.delete(0, tk.END)
+    if current_text.endswith("+") or current_text.endswith("-") or current_text.endswith("×") or current_text.endswith("÷"):
+        display.delete(len(current_text) - 1, tk.END)
+    display.insert(tk.END, "×")
+    display.configure(state="disabled")  # Disable the display again
+
+def divide_button_pressed():
+    display.configure(state="normal")  # Enable the display to modify it
+    current_text = display.get()
+    if current_text == "0":
+        display.delete(0, tk.END)
+    if current_text.endswith("+") or current_text.endswith("-") or current_text.endswith("×") or current_text.endswith("÷"):
+        display.delete(len(current_text) - 1, tk.END)
+    display.insert(tk.END, "÷")
+    display.configure(state="disabled")  # Disable the display again
+                             
 # region Display
 
 white_canvas = tk.CTkCanvas(app, bg="white")
@@ -139,7 +180,7 @@ dark_mode_button.grid(padx=3, pady=0, row=0, column=1, sticky="nsew")
 # region Function Buttons
 add_button = tk.CTkButton(app, text="+", command=lambda: (print("Add"), add_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white")
 add_button.grid(padx = 3, pady = 3, row=2, column=3, sticky="nsew")
-subtract_button = tk.CTkButton(app, text="-", command=lambda: print("Subtract"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+subtract_button = tk.CTkButton(app, text="-", command=lambda: (print("Subtract"), subtract_button_pressed()), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 subtract_button.grid(padx = 3, pady = 3, row=3, column=3, sticky="nsew")
 multiply_button = tk.CTkButton(app, text="×", command=lambda: print("Multiply"), height=4, width=4, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
 multiply_button.grid(padx = 3, pady = 3, row=4, column=3, sticky="nsew")
