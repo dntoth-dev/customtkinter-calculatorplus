@@ -5,10 +5,11 @@ This is Calculator+, a simple calculator app written in Python with the customtk
 ### Current features
 - **Display** pressed numbers and operations
 - **Operation overwrite:** When choosing another operation right after the first, it automatically overwrites the first one
+-  **Perform** basic arithmetical operations (+,-,×,÷)
+- **Zero Division Error** checking
 - The program also includes a **User Interface (UI)**, made possible by the customtkinter library
 
 ### Upcoming features
-- **Calculate** operations
 - Follow the **standard order of operations**
 - **History** feature
 - Two screens: **A larger** displaying the current operation, and **a smaller** displaying the whole calculation.
