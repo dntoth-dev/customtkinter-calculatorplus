@@ -35,15 +35,16 @@ app.grid_columnconfigure(3, weight=1)
 
 def button_pressed(btn):
     display.configure(state="normal")
-    current_text = display.get("3.0", "end-1c")
+    current_text = display.get("3.0", "3.end")
     
     # Clear leading 0 if a number is pressed
-    if current_text == "0" and btn not in ["+", "-", "×", "÷", "."]:
-        display.delete(3.0, tk.END)
+    if current_text.strip() == "0" and btn not in ["+", "-", "×", "÷", "."]:
+        display.delete("3.0", "3.end")
     
     # Replace last operator if a new one is pressed
     if btn in ["+", "-", "×", "÷"] and current_text.endswith(("+", "-", "×", "÷")):
-        display.delete("3.0", "end-1c")
+        display.delete("3.end-1c")
+       
         
     # Insert the character
     display.insert(tk.END, btn)
@@ -51,7 +52,7 @@ def button_pressed(btn):
 
 def equal_button_pressed():
     try:
-        current_text = display.get("1.0", "end-1c")
+        current_text = display.get("3.0", "3.end")
         # Replace the custom "×" and "÷" with standard Python operators
         expression = current_text.replace("×", "*").replace("÷", "/")
         
@@ -60,8 +61,8 @@ def equal_button_pressed():
         
         # Display the result
         display.configure(state="normal")
-        display.delete(0, tk.END)
-        display.insert(0, str(result))
+        display.delete(3.0, "3.end")
+        display.insert("3.0", str(result))
         display.configure(state="disabled")
 
     except ZeroDivisionError:
