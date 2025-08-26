@@ -1,7 +1,6 @@
 import customtkinter as tk
 import os
 
-
 # region App Setup
 app = tk.CTk()
 app.title("Calculator+")
@@ -34,20 +33,25 @@ app.grid_columnconfigure(3, weight=1)
 # region Functions
 
 def button_pressed(btn):
-    display.configure(state="normal")
     current_text = display.get("3.0", "3.end")
+    if not current_text.__contains__("Error"):
+        # Clear leading 0 if a number is pressed
+        if current_text.strip() == "0" and btn not in ["+", "-", "×", "÷", "."]:
+            display.configure(state="normal")
+            display.delete("3.0", "3.end")
+            display.configure(state="disabled")
     
-    # Clear leading 0 if a number is pressed
-    if current_text.strip() == "0" and btn not in ["+", "-", "×", "÷", "."]:
-        display.delete("3.0", "3.end")
-    
-    # Replace last operator if a new one is pressed
-    if btn in ["+", "-", "×", "÷"] and current_text.endswith(("+", "-", "×", "÷")):
-        display.delete("3.end-1c")
-       
-        
-    # Insert the character
-    display.insert(tk.END, btn)
+        # Replace last operator if a new one is pressed
+        if btn in ["+", "-", "×", "÷"] and current_text.endswith(("+", "-", "×", "÷")):
+            display.delete("3.end-1c")
+            
+        display.configure(state="normal")
+        display.insert(tk.END, btn)
+
+def clearEntry_button_pressed():
+    display.configure(state="normal")
+    display.delete("3.0", "3.end")
+    display.insert("3.0", "0")
     display.configure(state="disabled")
 
 def equal_button_pressed():
@@ -67,21 +71,20 @@ def equal_button_pressed():
 
     except ZeroDivisionError:
         display.configure(state="normal")
-        display.delete(3.0, tk.END)
+        display.delete(3.0, "3.end")
         display.insert(3.0, "Error: Div by zero")
         display.configure(state="disabled")
     except (SyntaxError, ValueError):
         display.configure(state="normal")
-        display.delete(3.0, tk.END)
+        display.delete(3.0, "3.end")
         display.insert(3.0, "Error: Invalid input")
         display.configure(state="disabled")
     except Exception as e:
         display.configure(state="normal")
-        display.delete(3.0, tk.END)
+        display.delete(3.0, "3.end")
         display.insert(3.0, "Error")
         display.configure(state="disabled")
-
-
+# endregion
 
 # region Display
 
@@ -115,7 +118,7 @@ dark_mode_button.grid(padx=3, pady=0, row=0, column=1)
 
 # region Function Buttons
 
-clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear Entry")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear Entry"), clearEntry_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
 clearEntry_button.grid(row=1, column=2, pady=1)
 clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
 clear_button.grid(row=1, column=3, pady=1)
