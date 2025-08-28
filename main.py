@@ -53,6 +53,23 @@ def clearEntry_button_pressed():
     display.delete("3.0", "3.end")
     display.insert("3.0", "0")
     display.configure(state="disabled")
+    
+def delete_button_pressed():
+    display.configure(state="normal")
+    current_text = display.get("3.0", "3.end")
+     # If there's only 1 character left, pressing DEL would empty the screen and place a leading 0.
+    if len(current_text) == 1:
+        display.delete("3.end-1c")
+        display.insert("3.0", "0")
+    # If there's an error message, the DEL button clears the whole error message
+    elif current_text.__contains__("Error"):
+        display.delete("3.0", "3.end")
+        display.insert("3.0", "0")
+    else:
+        display.delete("3.end-1c")
+    display.configure(state="disabled")
+        
+    
 
 def equal_button_pressed():
     try:
@@ -122,7 +139,7 @@ clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear E
 clearEntry_button.grid(row=1, column=2, pady=1)
 clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
 clear_button.grid(row=1, column=3, pady=1)
-DEL_button = tk.CTkButton(app, text="DEL", command=lambda: (print("Delete")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+DEL_button = tk.CTkButton(app, text="DEL", command=lambda: (print("Delete"), delete_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
 DEL_button.grid(row=1, column=1, pady=1)
 M_button = tk.CTkButton(app, text="M", command=lambda: (print("Memory")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
 M_button.grid(row=1, column=0, pady=1)
