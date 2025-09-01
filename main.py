@@ -85,6 +85,15 @@ def delete_button_pressed():
     else:
         display.delete("3.end-1c")
     display.configure(state="disabled")
+    
+def clear_button_pressed():
+    current_text = display.get("3.0", "3.end")
+    if not current_text.strip() == 0:
+        display.configure(state="normal")
+        display.delete(3.0, "3.end")
+        display.insert(3.0, "0")
+        display.configure(state="disabled")
+    
         
     
 
@@ -154,7 +163,7 @@ dark_mode_button.grid(padx=3, pady=0, row=0, column=1)
 
 clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear Entry"), clearEntry_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 clearEntry_button.grid(row=1, column=2, pady=1)
-clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear")), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
+clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear"), clear_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 clear_button.grid(row=1, column=3, pady=1)
 DEL_button = tk.CTkButton(app, text="DEL", command=lambda: (print("Delete"), delete_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 DEL_button.grid(row=1, column=1, pady=1)
