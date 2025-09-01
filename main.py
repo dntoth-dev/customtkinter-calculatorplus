@@ -11,9 +11,10 @@ app.configure(fg_color="light grey")
 # endregion
 
 # region Font Configuration
-btn_font = ("Arial", 20, "bold")
-display_font = ("Arial", 30, "bold")
-optn_font = ("Arial", 12)
+btn_font = ("Segoe UI", 24)
+display_font = ("Segoe UI", 30)
+optn_font = ("Segoe UI", 12)
+small_font = ("Segoe UI", 9)
 # endregion
 
 # region Grid Configuration
@@ -43,15 +44,31 @@ def button_pressed(btn):
     
         # Replace last operator if a new one is pressed
         if btn in ["+", "-", "×", "÷"] and current_text.endswith(("+", "-", "×", "÷")):
+            display.configure(state="normal")
             display.delete("3.end-1c")
+            display.configure(state="disabled")
             
         display.configure(state="normal")
         display.insert(tk.END, btn)
+        display.configure(state="disabled")
 
 def clearEntry_button_pressed():
     display.configure(state="normal")
-    display.delete("3.0", "3.end")
-    display.insert("3.0", "0")
+    current_text = display.get("3.0", "3.end")
+    operators = ["+", "-", "×", "÷"]
+    
+    # Find the index of the last operator in a single, simple line
+    last_operator_index = max(current_text.rfind(op) for op in operators)
+    
+    if last_operator_index != -1:
+        # Construct the start index in the "line.char" format
+        start_index = f"3.{last_operator_index}"
+        display.delete(start_index, "3.end")
+    else:
+        # If no operator was found, clear the entire text
+        display.delete("3.0", "3.end")
+        display.insert("3.0", "0")
+
     display.configure(state="disabled")
     
 def delete_button_pressed():
@@ -135,60 +152,59 @@ dark_mode_button.grid(padx=3, pady=0, row=0, column=1)
 
 # region Function Buttons
 
-clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear Entry"), clearEntry_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+clearEntry_button = tk.CTkButton(app, text="CE", command=lambda: (print("Clear Entry"), clearEntry_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 clearEntry_button.grid(row=1, column=2, pady=1)
-clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+clear_button = tk.CTkButton(app, text="C", command=lambda: (print("Clear")), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 clear_button.grid(row=1, column=3, pady=1)
-DEL_button = tk.CTkButton(app, text="DEL", command=lambda: (print("Delete"), delete_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+DEL_button = tk.CTkButton(app, text="DEL", command=lambda: (print("Delete"), delete_button_pressed()), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 DEL_button.grid(row=1, column=1, pady=1)
-M_button = tk.CTkButton(app, text="M", command=lambda: (print("Memory")), height=70, width=95, fg_color="orange", hover_color="dark grey", text_color="white", font=btn_font)
+M_button = tk.CTkButton(app, text="M", command=lambda: (print("Memory")), height=70, width=95, fg_color="orange", hover_color="dark orange", text_color="white", font=btn_font)
 M_button.grid(row=1, column=0, pady=1)
 
 
-add_button = tk.CTkButton(app, text="+", command=lambda: (print("Add"), button_pressed("+")), height=70, width=95, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+add_button = tk.CTkButton(app, text="+", command=lambda: (print("Add"), button_pressed("+")), height=70, width=95, fg_color="blue", hover_color="darkblue", text_color="white", font=btn_font)
 add_button.grid(row=2, column=3)
-subtract_button = tk.CTkButton(app, text="-", command=lambda: (print("Subtract"), button_pressed("-")), height=70, width=95, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+subtract_button = tk.CTkButton(app, text="-", command=lambda: (print("Subtract"), button_pressed("-")), height=70, width=95, fg_color="blue", hover_color="darkblue", text_color="white", font=btn_font)
 subtract_button.grid(row=3, column=3)
-multiply_button = tk.CTkButton(app, text="×", command=lambda: (print("Multiply"), button_pressed("×")), height=70, width=95, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+multiply_button = tk.CTkButton(app, text="×", command=lambda: (print("Multiply"), button_pressed("×")), height=70, width=95, fg_color="blue", hover_color="darkblue", text_color="white", font=btn_font)
 multiply_button.grid(row=4, column=3)
-divide_button = tk.CTkButton(app, text="÷", command=lambda: (print("Divide"), button_pressed("÷")), height=70, width=95, fg_color="blue", hover_color="lightblue", text_color="white", font=btn_font)
+divide_button = tk.CTkButton(app, text="÷", command=lambda: (print("Divide"), button_pressed("÷")), height=70, width=95, fg_color="blue", hover_color="darkblue", text_color="white", font=btn_font)
 divide_button.grid(row=5, column=3)
 
-equal_button = tk.CTkButton(app, text="=", command=lambda: (print("Equal to"), equal_button_pressed()), height=70, width=95, fg_color="green", hover_color="lightblue", text_color="white", font=btn_font)
+equal_button = tk.CTkButton(app, text="=", command=lambda: (print("Equal to"), equal_button_pressed()), height=70, width=95, fg_color="blue", hover_color="darkblue", text_color="white", font=btn_font)
 equal_button.grid(row=5, column=2)
 # endregion
 
 # region Number Buttons
-one_bt = tk.CTkButton(app, text="1", command=lambda: (print("1"), button_pressed(1)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+one_bt = tk.CTkButton(app, text="1", command=lambda: (print("1"), button_pressed(1)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 one_bt.grid(row=4, column=0, pady=1)
 
-two_bt = tk.CTkButton(app, text="2", command=lambda: (print("2"), button_pressed(2)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+two_bt = tk.CTkButton(app, text="2", command=lambda: (print("2"), button_pressed(2)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 two_bt.grid(row=4, column=1, pady=1)
 
-three_bt = tk.CTkButton(app, text="3", command=lambda: (print("3"), button_pressed(3)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+three_bt = tk.CTkButton(app, text="3", command=lambda: (print("3"), button_pressed(3)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 three_bt.grid(row=4, column=2, pady=1)
 
-four_bt = tk.CTkButton(app, text="4", command=lambda: (print("4"), button_pressed(4)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+four_bt = tk.CTkButton(app, text="4", command=lambda: (print("4"), button_pressed(4)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 four_bt.grid(row=3, column=0, pady=1)
 
-five_bt = tk.CTkButton(app, text="5", command=lambda: (print("5"), button_pressed(5)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+five_bt = tk.CTkButton(app, text="5", command=lambda: (print("5"), button_pressed(5)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 five_bt.grid(row=3, column=1, pady=1)
 
-six_bt = tk.CTkButton(app, text="6", command=lambda: (print("6"), button_pressed(6)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+six_bt = tk.CTkButton(app, text="6", command=lambda: (print("6"), button_pressed(6)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 six_bt.grid(row=3, column=2, pady=1)
 
-seven_bt = tk.CTkButton(app, text="7", command=lambda: (print("7"), button_pressed(7)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+seven_bt = tk.CTkButton(app, text="7", command=lambda: (print("7"), button_pressed(7)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 seven_bt.grid(row=2, column=0, pady=1)
 
-eight_bt = tk.CTkButton(app, text="8", command=lambda: (print("8"), button_pressed(8)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+eight_bt = tk.CTkButton(app, text="8", command=lambda: (print("8"), button_pressed(8)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 eight_bt.grid(row=2, column=1, pady=1)
 
-nine_bt = tk.CTkButton(app, text="9", command=lambda: (print("9"), button_pressed(9)), height=70, width=95, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+nine_bt = tk.CTkButton(app, text="9", command=lambda: (print("9"), button_pressed(9)), height=70, width=95, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 nine_bt.grid(row=2, column=2, pady=1)
 
-zero_bt = tk.CTkButton(app, text="0", command=lambda: (print("0"), button_pressed(0)), height=70, width=190, fg_color="white", hover_color="lightblue", text_color="black", font=btn_font)
+zero_bt = tk.CTkButton(app, text="0", command=lambda: (print("0"), button_pressed(0)), height=70, width=190, fg_color="white", hover_color="grey", text_color="black", font=btn_font)
 zero_bt.grid(row=5, column=0, columnspan=2, pady=1)
 # endregion
 
 app.mainloop()
-
